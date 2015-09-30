@@ -1,15 +1,22 @@
-# accelerometer-library
-Library to abstract away motion detection for Arduino + Accelerometer
+# README
 
-## Prerequisites
+Simple library to use an accelerometer with an arduino. Make sure the library is in your sketchbook library directory and then restart Arduino
 
-1. Arduino
-2. An accelerometer providing x,y,z acceleration data
+Sample program would be:
 
-## Implementation
+```
+#include <SPI.h>
+#include <Accelerometer.h>
+Accelerometer a(10);
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  Serial.println("ready to go!");
+}
 
-This code was written using the Sparkfun Breakout for the **ADXL345**: https://www.sparkfun.com/products/9836.
-
-Starter Arduino code: https://www.sparkfun.com/tutorials/240
-
-In the Arduino editor, load `differentiator.ino` and open up the `loop` tab to access the loop that processes the data loaded in.
+void loop() {
+  // put your main code here, to run repeatedly:
+  String output = a.processor();
+  Serial.println(output);
+}
+```
