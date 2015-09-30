@@ -7,7 +7,7 @@ Sample program would be:
 ```
 #include <SPI.h>
 #include <Accelerometer.h>
-Accelerometer a(10);
+Accelerometer a(10); //CS pin passed to Constructor
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
