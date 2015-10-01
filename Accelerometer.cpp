@@ -13,6 +13,7 @@ char DATAZ0 = 0x36; //Z-Axis Data 0
 char DATAZ1 = 0x37; //Z-Axis Data 1
 
 Accelerometer::Accelerometer(int CS) {
+  this->CS = CS;
     //Initiate an SPI communication instance.
   SPI.begin();
   //Configure the SPI connection for the ADXL345.
