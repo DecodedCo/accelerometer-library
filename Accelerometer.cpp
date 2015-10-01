@@ -12,17 +12,17 @@ char DATAY1 = 0x35; //Y-Axis Data 1
 char DATAZ0 = 0x36; //Z-Axis Data 0
 char DATAZ1 = 0x37; //Z-Axis Data 1
 
-Accelerometer::Accelerometer(int CS) {
-  this->CS = CS;
+Accelerometer::Accelerometer(int chipselect) {
+  CS = chipselect;
     //Initiate an SPI communication instance.
   SPI.begin();
   //Configure the SPI connection for the ADXL345.
   SPI.setDataMode(SPI_MODE3);
 
   //Set up the Chip Select pin to be an output from the Arduino.
-  pinMode(CS, OUTPUT);
+  pinMode(chipselect, OUTPUT);
   //Before communication starts, the Chip Select pin needs to be set high.
-  digitalWrite(CS, HIGH);
+  digitalWrite(chipselect, HIGH);
 
 	//Put the ADXL345 into +/- 4G range by writing the value 0x01 to the DATA_FORMAT register.
 	writeRegister(DATA_FORMAT, 0x01);
