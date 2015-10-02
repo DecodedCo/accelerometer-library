@@ -13,7 +13,6 @@ char DATAZ0 = 0x36; //Z-Axis Data 0
 char DATAZ1 = 0x37; //Z-Axis Data 1
 
 Accelerometer::Accelerometer(int chipSelect) {
-  Serial.println("Accelerometer initialised");
   mChipSelect = chipSelect;
   setup();
 }
@@ -30,14 +29,16 @@ Accelerometer::Accelerometer(int chipSelect, float threshold, int eventThreshold
 }
 void Accelerometer::setThreshold(int threshold) {
   mThreshold = threshold;
+  Serial.print("threshold: ");
+  Serial.println(mThreshold);
 }
 void Accelerometer::setEventThreshold(int eventThreshold) {
   mEventThreshold = eventThreshold;
+  Serial.print("event threshold: ");
+  Serial.println(mEventThreshold);
 }
 void Accelerometer::setup() {
-  Serial.print("chipselect: ");
-  Serial.println(mChipSelect);
-    //Initiate an SPI communication instance.
+  //Initiate an SPI communication instance.
   SPI.begin();
   //Configure the SPI connection for the ADXL345.
   SPI.setDataMode(SPI_MODE3);
@@ -53,6 +54,13 @@ void Accelerometer::setup() {
   scale = 0.0078125;
   //Put the ADXL345 into Measurement Mode by writing 0x08 to the POWER_CTL register.
   writeRegister(POWER_CTL, 0x08);  //Measurement mode  
+  Serial.println("Accelerometer initialised. Configuration");
+  Serial.print("chipSelect: ");
+  Serial.println(mChipSelect);
+  Serial.print("threshold: ");
+  Serial.println(mThreshold);
+  Serial.print("event threshold: ");
+  Serial.println(mEventThreshold);
 }
 String Accelerometer::processor() {
   String output;
