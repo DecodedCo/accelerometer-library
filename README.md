@@ -37,7 +37,7 @@ void loop() {
 * `setThreshold(int threshold);`
 	* Method to set the threshold directly
 * `setEventThreshold(int eventThreshold);`
-	* Method to set the even threshold directly
+	* Method to set the event threshold directly
 * `String processor();`
 	* Method to process the output of the accelerometer
 
