@@ -20,3 +20,24 @@ void loop() {
   Serial.println(output);
 }
 ```
+
+### Documentation
+
+##### Constructors
+
+* `Accelerometer(int chipselect);`
+	* Constructor setting just the chip select pin
+* `Accelerometer(int chipselect, float threshold);`
+	* Constructor overriding the default threshold
+* `Accelerometer(int chipselect, float threshold, int eventThreshold);`
+	* Constructor overiding the default threshold and event threshold
+
+##### Methods
+
+* `setThreshold(int threshold);`
+	* Method to set the threshold directly
+* `setEventThreshold(int eventThreshold);`
+	* Method to set the even threshold directly
+* `String processor();`
+	* Method to process the output of the accelerometer
+
