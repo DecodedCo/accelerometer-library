@@ -25,11 +25,11 @@ void loop() {
 
 ##### Constructors
 
-* `Accelerometer(int chipselect);`
+* `Accelerometer(int chipSelect);`
 	* Constructor setting just the chip select pin
-* `Accelerometer(int chipselect, float threshold);`
+* `Accelerometer(int chipSelect, float threshold);`
 	* Constructor overriding the default threshold
-* `Accelerometer(int chipselect, float threshold, int eventThreshold);`
+* `Accelerometer(int chipSelect, float threshold, int eventThreshold);`
 	* Constructor overiding the default threshold and event threshold
 
 ##### Methods

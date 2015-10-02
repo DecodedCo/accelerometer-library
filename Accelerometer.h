@@ -9,9 +9,9 @@
 
 class Accelerometer {
 	public:
-	Accelerometer(int chipselect);
-	Accelerometer(int chipselect, float threshold);
-	Accelerometer(int chipselect, float threshold, int eventThreshold);
+	Accelerometer(int chipSelect);
+	Accelerometer(int chipSelect, float threshold);
+	Accelerometer(int chipSelect, float threshold, int eventThreshold);
 	String processor();
 	void setThreshold(int threshold);
 	void setEventThreshold(int eventThreshold);
@@ -22,7 +22,7 @@ class Accelerometer {
 	void writeRegister(char registerAddress, char value);
 	void readRegister(char registerAddress, int numBytes, char * values);
 	//CS pin
-	int chipselect;
+	int mChipSelect;
 	//This buffer will hold values read from the ADXL345 registers.
 	char values[10];
 	//These variables will be used to hold the x,y and z axis accelerometer values.
@@ -38,9 +38,9 @@ class Accelerometer {
 	};
 	//double delta_a[3][20];
 	double average_delta_a[3];
-	double threshold = 0.2; // significant delta a
+	double mThreshold = 0.2; // significant delta a
 	unsigned long previous_event_time[3] = {0,0,0}; // when it happened
-	unsigned long eventThreshold = 250; // in ms, to count as movement
+	unsigned long mEventThreshold = 250; // in ms, to count as movement
 	double previous_event[3]; // the delta value
 	double previous_acceleration[3];
 };

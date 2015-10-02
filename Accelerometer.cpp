@@ -12,40 +12,40 @@ char DATAY1 = 0x35; //Y-Axis Data 1
 char DATAZ0 = 0x36; //Z-Axis Data 0
 char DATAZ1 = 0x37; //Z-Axis Data 1
 
-Accelerometer::Accelerometer(int chipselect) {
+Accelerometer::Accelerometer(int chipSelect) {
   Serial.println("Accelerometer initialised");
-  this->chipselect = chipselect;
+  mChipSelect = chipSelect;
   setup();
 }
-Accelerometer::Accelerometer(int chipselect, float threshold){
-  this->chipselect = chipselect;
-  this->threshold = threshold;
+Accelerometer::Accelerometer(int chipSelect, float threshold){
+  mChipSelect = chipSelect;
+  mThreshold = threshold;
   setup();
 }
-Accelerometer::Accelerometer(int chipselect, float threshold, int eventThreshold){
-  this->chipselect = chipselect;
-  this->threshold = threshold;
-  this->eventThreshold = eventThreshold;
+Accelerometer::Accelerometer(int chipSelect, float threshold, int eventThreshold){
+  mChipSelect = chipSelect;
+  mThreshold = threshold;
+  mEventThreshold = eventThreshold;
   setup();
 }
 void Accelerometer::setThreshold(int threshold) {
-  this->threshold = threshold;
+  mThreshold = threshold;
 }
 void Accelerometer::setEventThreshold(int eventThreshold) {
-  this->eventThreshold = eventThreshold;
+  mEventThreshold = eventThreshold;
 }
 void Accelerometer::setup() {
   Serial.print("chipselect: ");
-  Serial.println(chipselect);
+  Serial.println(mChipSelect);
     //Initiate an SPI communication instance.
   SPI.begin();
   //Configure the SPI connection for the ADXL345.
   SPI.setDataMode(SPI_MODE3);
 
   //Set up the Chip Select pin to be an output from the Arduino.
-  pinMode(chipselect, OUTPUT);
+  pinMode(mChipSelect, OUTPUT);
   //Before communication starts, the Chip Select pin needs to be set high.
-  digitalWrite(chipselect, HIGH);
+  digitalWrite(mChipSelect, HIGH);
 
   //Put the ADXL345 into +/- 4G range by writing the value 0x01 to the DATA_FORMAT register.
   writeRegister(DATA_FORMAT, 0x01);
@@ -73,8 +73,8 @@ String Accelerometer::processor() {
   for (int axis=0; axis<3; axis++) {
     average_delta_a[axis] = average_delta_a[axis] / iterations;
     
-    if (abs(average_delta_a[axis]) > threshold
-      && (millis() - previous_event_time[axis]) > eventThreshold) {
+    if (abs(average_delta_a[axis]) > mThreshold
+      && (millis() - previous_event_time[axis]) > mEventThreshold) {
       if (previous_event[axis] > 0 && average_delta_a[axis] < 0) { // turning point
         output = axes[axis][0];
       } else if (previous_event[axis] < 0 && average_delta_a[axis] > 0) { // turning point 
@@ -117,13 +117,13 @@ void Accelerometer::readAccelerometer() {
 //  char value - The value to be written to the specified register.
 void Accelerometer::writeRegister(char registerAddress, char value){
   //Set Chip Select pin low to signal the beginning of an SPI packet.
-  digitalWrite(chipselect, LOW);
+  digitalWrite(mChipSelect, LOW);
   //Transfer the register address over SPI.
   SPI.transfer(registerAddress);
   //Transfer the desired register value over SPI.
   SPI.transfer(value);
   //Set the Chip Select pin high to signal the end of an SPI packet.
-  digitalWrite(chipselect, HIGH);
+  digitalWrite(mChipSelect, HIGH);
 }
 
 //This function will read a certain number of registers starting from a specified address and store their values in a buffer.
@@ -138,7 +138,7 @@ void Accelerometer::readRegister(char registerAddress, int numBytes, char * valu
   if(numBytes > 1)address = address | 0x40;
   
   //Set the Chip select pin low to start an SPI packet.
-  digitalWrite(chipselect, LOW);
+  digitalWrite(mChipSelect, LOW);
   //Transfer the starting register address that needs to be read.
   SPI.transfer(address);
   //Continue to read registers until we've read the number specified, storing the results to the input buffer.
@@ -146,5 +146,5 @@ void Accelerometer::readRegister(char registerAddress, int numBytes, char * valu
     values[i] = SPI.transfer(0x00);
   }
   //Set the Chips Select pin high to end the SPI packet.
-  digitalWrite(chipselect, HIGH);
+  digitalWrite(mChipSelect, HIGH);
 }
